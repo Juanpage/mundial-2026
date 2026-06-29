@@ -305,6 +305,38 @@
     .ranking-table tr:last-child td { border-bottom: none; }
     .ranking-table tr:hover td     { background: rgba(255,255,255,0.03); }
 
+    /* ── Per-match ranking cards ─────────────────────────────────── */
+    .match-ranking-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .match-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: rgba(15,52,96,0.55);
+      font-size: 0.88rem;
+      flex-wrap: wrap;
+    }
+    .match-card-header .pool-badge {
+      margin-left: auto;
+      background: var(--gold);
+      color: #222;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+    .match-ranking-card .ranking-table {
+      font-size: 0.84rem;
+    }
+    .earnings-section { margin-bottom: 28px; }
+    .section-sub { font-size: 1rem; color: var(--text-muted); margin: 0 0 14px; }
+
     .pos-badge {
       display: inline-flex;
       align-items: center;
@@ -634,23 +666,27 @@
 
     <div class="card">
       <h2>💰 Distribución del pozo</h2>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:6px;">
+        La apuesta es <strong style="color:var(--gold);">$3 por partido</strong>. Cada partido tiene su propio pozo independiente.
+      </p>
       <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px;">
-        12 participantes × $3 = <strong style="color:var(--gold);">$36 total</strong>
+        12 participantes × $3 = <strong style="color:var(--gold);">$36 por partido</strong>
+        &nbsp;·&nbsp; 16 partidos = <strong style="color:var(--gold);">$576 en total</strong>
       </p>
 
       <div class="prize-row">
         <span class="prize-pos">🥇</span>
-        <span class="prize-label">1.° lugar</span>
+        <span class="prize-label">1.° del partido</span>
         <span class="prize-amount">$21.60 <span style="font-size:0.7rem; color:var(--text-muted);">(60%)</span></span>
       </div>
       <div class="prize-row">
         <span class="prize-pos">🥈</span>
-        <span class="prize-label">2.° lugar</span>
+        <span class="prize-label">2.° del partido</span>
         <span class="prize-amount">$9.00 <span style="font-size:0.7rem; color:var(--text-muted);">(25%)</span></span>
       </div>
       <div class="prize-row">
         <span class="prize-pos">🥉</span>
-        <span class="prize-label">3.° lugar</span>
+        <span class="prize-label">3.° del partido</span>
         <span class="prize-amount">$5.40 <span style="font-size:0.7rem; color:var(--text-muted);">(15%)</span></span>
       </div>
     </div>
@@ -683,8 +719,8 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwnSqt9TBrqk3fw
 // ══════════════════════════════════════════════════════════════════════
 
 const ADMIN_PASSWORD = 'visiting2026';
-const PRIZE_POOL     = 36;
-const PRIZES = { 1: 21.60, 2: 9.00, 3: 5.40 };
+const PRIZE_PER_PERSON = 3;           // $3 por persona por partido
+const PRIZE_PCT = { 1: 0.60, 2: 0.25, 3: 0.15 };
 
 const MATCHES = [
   { id:'p01', local:'Canadá',         visitante:'Sudáfrica',  fecha:'Dom 29 jun' },
@@ -1000,7 +1036,7 @@ async function cargarRanking() {
       fetchScript('resultados')
     ]);
 
-    renderRanking(rankData);
+    renderRanking(rankData, resData);
     renderResultadosMini(resData);
   } catch (e) {
     const err = `<p style="color:var(--red); font-size:0.85rem; padding:10px">
@@ -1012,50 +1048,143 @@ async function cargarRanking() {
   }
 }
 
-function renderRanking(data) {
-  if (!data || data.length === 0) {
+/** Calcula puntos de un participante en UN partido */
+function calcMatchPts(pronostico, resultado) {
+  if (!pronostico || String(pronostico).trim() === '-' || String(pronostico).trim() === '') return null;
+  if (!resultado) return null;
+  const loc = Number(resultado.local), vis = Number(resultado.visitante);
+  if (loc === 0 && vis === 0) return null; // partido no jugado aún
+  const partes = String(pronostico).trim().split('-');
+  if (partes.length !== 2) return null;
+  const pL = parseInt(partes[0], 10), pV = parseInt(partes[1], 10);
+  if (isNaN(pL) || isNaN(pV)) return null;
+  if (pL === loc && pV === vis) return 3;
+  if (Math.sign(pL - pV) === Math.sign(loc - vis)) return 1;
+  return 0;
+}
+
+function renderRanking(rankData, resData) {
+  if (!rankData || rankData.length === 0) {
     document.getElementById('ranking-content').innerHTML =
       '<p style="color:var(--text-muted); font-size:0.85rem;">Aún no hay pronósticos registrados.</p>';
     return;
   }
 
-  // Ordenar por puntos desc
-  const sorted = [...data].sort((a, b) => (Number(b.puntos) || 0) - (Number(a.puntos) || 0));
-
-  let html = `<table class="ranking-table">
-    <thead>
-      <tr>
-        <th>Pos</th>
-        <th>Nombre</th>
-        <th>Pts</th>
-        <th>Premio</th>
-      </tr>
-    </thead>
-    <tbody>`;
-
-  sorted.forEach((row, i) => {
-    const pos   = i + 1;
-    const pts   = Number(row.puntos) || 0;
-    const prize = PRIZES[pos];
-
-    const posBadge = pos <= 3
-      ? `<span class="pos-badge pos-${pos}">${['🥇','🥈','🥉'][pos-1]}</span>`
-      : `<span class="pos-badge pos-n">${pos}</span>`;
-
-    const prizeBadge = prize
-      ? `<span class="prize-badge">$${prize.toFixed(2)}</span>`
-      : '<span style="color:var(--text-muted);">—</span>';
-
-    html += `<tr>
-      <td>${posBadge}</td>
-      <td><strong>${esc(row.nombre)}</strong></td>
-      <td><span class="pts-badge">${pts}</span></td>
-      <td>${prizeBadge}</td>
-    </tr>`;
+  // Mapa de resultados reales: { p01: {local:2, visitante:1}, ... }
+  const resultsMap = {};
+  (resData || []).forEach(r => {
+    resultsMap[r.partido] = { local: Number(r.local)||0, visitante: Number(r.visitante)||0 };
   });
 
-  html += '</tbody></table>';
-  document.getElementById('ranking-content').innerHTML = html;
+  // Acumular ganancias por persona
+  const earnings = {};
+  rankData.forEach(r => { if (r.nombre) earnings[r.nombre] = 0; });
+
+  let matchesHtml = '';
+  let playedCount = 0;
+
+  MATCHES.forEach(m => {
+    const pid = m.id;
+    const res = resultsMap[pid];
+    const played = res && !(res.local === 0 && res.visitante === 0);
+    if (!played) return;
+
+    // Participantes que apostaron a este partido
+    const entries = rankData
+      .map(row => {
+        const pts = calcMatchPts(row[pid], res);
+        return { nombre: row.nombre, pronostico: String(row[pid] || '-').trim(), pts };
+      })
+      .filter(e => e.pts !== null);
+
+    if (entries.length === 0) return;
+    playedCount++;
+
+    // Ordenar por pts desc
+    entries.sort((a, b) => b.pts - a.pts);
+    const pool = entries.length * PRIZE_PER_PERSON;
+
+    // Distribuir premios con manejo de empates
+    let posActual = 1;
+    let j = 0;
+    while (j < entries.length && posActual <= 3) {
+      const thisPts = entries[j].pts;
+      const empatados = entries.filter(e => e.pts === thisPts);
+      // Sumar %% de las posiciones ocupadas por estos empatados
+      let prizeSum = 0;
+      for (let p = posActual; p < posActual + empatados.length && p <= 3; p++) {
+        prizeSum += (PRIZE_PCT[p] || 0) * pool;
+      }
+      const prizeEach = empatados.length > 0 ? prizeSum / empatados.length : 0;
+      empatados.forEach(e => { earnings[e.nombre] = (earnings[e.nombre] || 0) + prizeEach; });
+      posActual += empatados.length;
+      j += empatados.length;
+    }
+
+    // Renderizar mini-tabla del partido
+    const MEDALS = ['🥇','🥈','🥉'];
+    let filas = '';
+    let rankPos = 1;
+    for (let k = 0; k < entries.length; k++) {
+      const e = entries[k];
+      const badge = rankPos <= 3
+        ? `<span style="font-size:1.1rem;">${MEDALS[rankPos-1]}</span>`
+        : `<span class="pos-badge pos-n">${rankPos}</span>`;
+      filas += `<tr>
+        <td style="width:36px;">${badge}</td>
+        <td><strong>${esc(e.nombre)}</strong></td>
+        <td><span class="pts-badge">${e.pts}</span></td>
+        <td style="color:var(--text-muted);font-size:0.8rem;">${esc(e.pronostico)}</td>
+      </tr>`;
+      // Avanzar posición solo si el siguiente tiene menos puntos
+      if (k + 1 < entries.length && entries[k+1].pts < e.pts) rankPos = k + 2;
+    }
+
+    matchesHtml += `
+      <div class="match-ranking-card">
+        <div class="match-card-header">
+          <span class="res-id">${pid.toUpperCase()}</span>
+          <span>${esc(m.local)} <strong>${res.local}-${res.visitante}</strong> ${esc(m.visitante)}</span>
+          <span class="pool-badge">Pozo $${pool.toFixed(2)}</span>
+        </div>
+        <table class="ranking-table">
+          <thead><tr><th>Pos</th><th>Nombre</th><th>Pts</th><th>Pronóstico</th></tr></thead>
+          <tbody>${filas}</tbody>
+        </table>
+      </div>`;
+  });
+
+  // Tabla de ganancias acumuladas
+  const earningsList = Object.entries(earnings)
+    .sort(([,a],[,b]) => b - a);
+
+  let earningsHtml;
+  if (playedCount === 0) {
+    earningsHtml = '<p style="color:var(--text-muted);font-size:0.85rem;">Los premios se calcularán cuando se jueguen los partidos.</p>';
+  } else {
+    earningsHtml = `<table class="ranking-table">
+      <thead><tr><th>Pos</th><th>Nombre</th><th>Ganado</th></tr></thead><tbody>`;
+    earningsList.forEach(([nombre, total], i) => {
+      const pos = i + 1;
+      const badge = pos <= 3
+        ? `<span style="font-size:1.1rem;">${['🥇','🥈','🥉'][pos-1]}</span>`
+        : `<span class="pos-badge pos-n">${pos}</span>`;
+      earningsHtml += `<tr>
+        <td style="width:36px;">${badge}</td>
+        <td><strong>${esc(nombre)}</strong></td>
+        <td>${total > 0 ? `<span class="prize-badge">$${total.toFixed(2)}</span>` : '<span style="color:var(--text-muted);">$0.00</span>'}</td>
+      </tr>`;
+    });
+    earningsHtml += '</tbody></table>';
+  }
+
+  const totalPool = MATCHES.length * rankData.length * PRIZE_PER_PERSON;
+  document.getElementById('ranking-content').innerHTML =
+    `<div class="earnings-section">
+      <p class="section-sub">💰 Ganancias acumuladas <span style="font-size:0.75rem;color:var(--text-muted);">(${playedCount}/${MATCHES.length} partidos jugados · Pozo total $${totalPool})</span></p>
+      ${earningsHtml}
+    </div>
+    ${playedCount > 0 ? `<p class="section-sub">⚽ Detalle por partido</p>${matchesHtml}` : ''}`;
 }
 
 function renderResultadosMini(data) {
