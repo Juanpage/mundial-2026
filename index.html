@@ -705,6 +705,45 @@ const MATCHES = [
   { id:'p16', local:'Colombia',       visitante:'Ghana',      fecha:'Jue 3 jul'  },
 ];
 
+// ══════════════════════════════════════════════════════════════════════
+// ⚠️  HORARIOS DE INICIO DE PARTIDOS (ISO 8601 en hora de Ecuador UTC-5)
+//     Actualiza estos valores con los horarios reales del torneo.
+//     El formulario se bloqueará automáticamente cuando el partido empiece.
+// ══════════════════════════════════════════════════════════════════════
+const HORARIOS = {
+  p01: new Date('2026-06-29T15:00:00-05:00'), // Canadá vs Sudáfrica
+  p02: new Date('2026-06-29T15:00:00-05:00'), // Brasil vs Japón
+  p03: new Date('2026-06-29T19:00:00-05:00'), // Alemania vs Paraguay
+  p04: new Date('2026-06-29T19:00:00-05:00'), // Países Bajos vs Marruecos
+  p05: new Date('2026-06-30T15:00:00-05:00'), // Costa de Marfil vs Noruega
+  p06: new Date('2026-06-30T15:00:00-05:00'), // Francia vs Suecia
+  p07: new Date('2026-06-30T19:00:00-05:00'), // México vs Ecuador
+  p08: new Date('2026-07-01T15:00:00-05:00'), // Bélgica vs Senegal
+  p09: new Date('2026-07-01T15:00:00-05:00'), // Estados Unidos vs Bosnia
+  p10: new Date('2026-07-01T19:00:00-05:00'), // Inglaterra vs RD Congo
+  p11: new Date('2026-07-02T15:00:00-05:00'), // España vs Austria
+  p12: new Date('2026-07-02T15:00:00-05:00'), // Portugal vs Croacia
+  p13: new Date('2026-07-02T19:00:00-05:00'), // Suiza vs Argelia
+  p14: new Date('2026-07-03T15:00:00-05:00'), // Australia vs Egipto
+  p15: new Date('2026-07-03T15:00:00-05:00'), // Argentina vs Cabo Verde
+  p16: new Date('2026-07-03T19:00:00-05:00'), // Colombia vs Ghana
+};
+
+// Detectar modo: ¿se abrió con ?p=p07 (partido único)?
+const URL_PARAMS   = new URLSearchParams(window.location.search);
+const PARTIDO_SOLO = URL_PARAMS.get('p'); // "p07" o null
+
+function isLocked(pid) {
+  const h = HORARIOS[pid];
+  return h ? new Date() >= h : false;
+}
+
+function formatHora(pid) {
+  const h = HORARIOS[pid];
+  if (!h) return '';
+  return h.toLocaleString('es-EC', { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+}
+
 // ─── Tab switcher ─────────────────────────────────────────────────────
 function showTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -731,42 +770,84 @@ function buildPronosticoForm() {
   let currentDate = '';
   let html = '';
 
-  MATCHES.forEach(m => {
-    if (m.fecha !== currentDate) {
+  // Si hay ?p=pXX en la URL, mostrar solo ese partido
+  const lista = PARTIDO_SOLO
+    ? MATCHES.filter(m => m.id === PARTIDO_SOLO)
+    : MATCHES;
+
+  if (PARTIDO_SOLO && lista.length === 0) {
+    container.innerHTML = '<p style="color:#e94560;text-align:center;padding:2rem">Partido no encontrado: ' + PARTIDO_SOLO + '</p>';
+    return;
+  }
+
+  lista.forEach(m => {
+    const locked = isLocked(m.id);
+    const hora   = formatHora(m.id);
+
+    if (!PARTIDO_SOLO && m.fecha !== currentDate) {
       currentDate = m.fecha;
       html += `<div class="date-group-title">${m.fecha}</div>`;
     }
 
-    html += `
-      <div class="match-card" id="mc-${m.id}">
-        <div class="match-header">
-          <span class="match-id">${m.id.toUpperCase()}</span>
-          <span class="match-date">${m.fecha}</span>
-        </div>
-        <div class="match-body">
-          <span class="team-name home">${m.local}</span>
-          <div class="score-inputs">
-            <input type="number" id="s-${m.id}-l" min="0" max="20"
-                   oninput="onScoreInput('${m.id}')" placeholder="—" />
-            <span class="score-dash">–</span>
-            <input type="number" id="s-${m.id}-v" min="0" max="20"
-                   oninput="onScoreInput('${m.id}')" placeholder="—" />
+    if (locked) {
+      // Partido ya empezó: mostrar tarjeta bloqueada
+      html += `
+        <div class="match-card locked" id="mc-${m.id}">
+          <div class="match-header">
+            <span class="match-id">${m.id.toUpperCase()}</span>
+            <span class="match-date">${m.fecha}</span>
           </div>
-          <span class="team-name away">${m.visitante}</span>
-        </div>
-        <div class="quick-picks">
-          <button class="qp-btn" id="qp-${m.id}-l"
-                  onclick="quickPick('${m.id}','local')">🏠 Local</button>
-          <button class="qp-btn" id="qp-${m.id}-e"
-                  onclick="quickPick('${m.id}','empate')">🤝 Empate</button>
-          <button class="qp-btn" id="qp-${m.id}-v"
-                  onclick="quickPick('${m.id}','visitante')">✈️ Visitante</button>
-          <button class="qp-btn clear" onclick="clearPick('${m.id}')">✕</button>
-        </div>
-      </div>`;
+          <div class="match-body">
+            <span class="team-name home">${m.local}</span>
+            <div class="score-inputs" style="opacity:.4;pointer-events:none">
+              <input type="number" id="s-${m.id}-l" disabled placeholder="—" />
+              <span class="score-dash">–</span>
+              <input type="number" id="s-${m.id}-v" disabled placeholder="—" />
+            </div>
+            <span class="team-name away">${m.visitante}</span>
+          </div>
+          <div style="text-align:center;padding:.4rem .5rem .8rem;color:#e94560;font-size:.8rem;font-weight:600">
+            🔒 Partido iniciado · ${hora}
+          </div>
+        </div>`;
+    } else {
+      html += `
+        <div class="match-card" id="mc-${m.id}">
+          <div class="match-header">
+            <span class="match-id">${m.id.toUpperCase()}</span>
+            <span class="match-date">${hora || m.fecha}</span>
+          </div>
+          <div class="match-body">
+            <span class="team-name home">${m.local}</span>
+            <div class="score-inputs">
+              <input type="number" id="s-${m.id}-l" min="0" max="20"
+                     oninput="onScoreInput('${m.id}')" placeholder="—" />
+              <span class="score-dash">–</span>
+              <input type="number" id="s-${m.id}-v" min="0" max="20"
+                     oninput="onScoreInput('${m.id}')" placeholder="—" />
+            </div>
+            <span class="team-name away">${m.visitante}</span>
+          </div>
+          <div class="quick-picks">
+            <button class="qp-btn" id="qp-${m.id}-l"
+                    onclick="quickPick('${m.id}','local')">🏠 Local</button>
+            <button class="qp-btn" id="qp-${m.id}-e"
+                    onclick="quickPick('${m.id}','empate')">🤝 Empate</button>
+            <button class="qp-btn" id="qp-${m.id}-v"
+                    onclick="quickPick('${m.id}','visitante')">✈️ Visitante</button>
+            <button class="qp-btn clear" onclick="clearPick('${m.id}')">✕</button>
+          </div>
+        </div>`;
+    }
   });
 
   container.innerHTML = html;
+
+  // Si es modo partido único y está bloqueado, ocultar el botón de guardar
+  if (PARTIDO_SOLO && lista.length > 0 && isLocked(lista[0].id)) {
+    const btn = document.getElementById('btn-guardar');
+    if (btn) btn.style.display = 'none';
+  }
 }
 
 function onScoreInput(id) {
@@ -829,22 +910,9 @@ async function guardarPronostico() {
     return;
   }
 
-  const payload = { tipo: 'pronostico', nombre };
-  let alguno = false;
-
-  MATCHES.forEach(m => {
-    const l = document.getElementById('s-' + m.id + '-l').value;
-    const v = document.getElementById('s-' + m.id + '-v').value;
-    if (l !== '' && v !== '') {
-      payload[m.id] = l + '-' + v;
-      alguno = true;
-    } else {
-      payload[m.id] = '-';
-    }
-  });
-
-  if (!alguno) {
-    showToast('⚠️ Completa al menos un partido', 'error');
+  // Validar que el partido del link no esté bloqueado
+  if (PARTIDO_SOLO && isLocked(PARTIDO_SOLO)) {
+    showToast('🔒 Este partido ya comenzó', 'error');
     return;
   }
 
@@ -853,11 +921,65 @@ async function guardarPronostico() {
   btn.textContent = '⏳ Guardando...';
 
   try {
+    let payload = { tipo: 'pronostico', nombre };
+
+    if (PARTIDO_SOLO) {
+      // Modo partido único: cargar predicciones existentes del participante y merge
+      let existentes = {};
+      try {
+        const url = APPS_SCRIPT_URL + '?action=ranking&t=' + Date.now();
+        const resp = await fetch(url);
+        const data = await resp.json();
+        const fila = data.find(r => String(r.nombre || '').trim().toLowerCase() === nombre.toLowerCase());
+        if (fila) {
+          MATCHES.forEach(m => { existentes[m.id] = fila[m.id] || '-'; });
+        }
+      } catch(e) { /* sin predicciones previas */ }
+
+      // Partir de existentes (o '-') y actualizar solo el partido del link
+      MATCHES.forEach(m => { payload[m.id] = existentes[m.id] || '-'; });
+
+      const l = document.getElementById('s-' + PARTIDO_SOLO + '-l')?.value;
+      const v = document.getElementById('s-' + PARTIDO_SOLO + '-v')?.value;
+      if (!l && !v) {
+        showToast('⚠️ Ingresa un marcador', 'error');
+        btn.disabled = false;
+        btn.textContent = '💾 Guardar pronóstico';
+        return;
+      }
+      payload[PARTIDO_SOLO] = (l !== '' && v !== '') ? l + '-' + v : '-';
+
+    } else {
+      // Modo completo: recoger todos los partidos no bloqueados
+      let alguno = false;
+      MATCHES.forEach(m => {
+        if (isLocked(m.id)) {
+          payload[m.id] = '-'; // partido bloqueado → no enviar
+          return;
+        }
+        const l = document.getElementById('s-' + m.id + '-l').value;
+        const v = document.getElementById('s-' + m.id + '-v').value;
+        if (l !== '' && v !== '') {
+          payload[m.id] = l + '-' + v;
+          alguno = true;
+        } else {
+          payload[m.id] = '-';
+        }
+      });
+
+      if (!alguno) {
+        showToast('⚠️ Completa al menos un partido', 'error');
+        btn.disabled = false;
+        btn.textContent = '💾 Guardar pronóstico';
+        return;
+      }
+    }
+
     await postScript(payload);
-    showToast('✅ ¡Pronóstico guardado!', 'success');
-    // Mostrar cuántos partidos apostó
-    const count = MATCHES.filter(m => payload[m.id] && payload[m.id] !== '-').length;
-    showToast(`✅ ¡Guardado! Apostaste ${count} partidos`, 'success');
+    const m = MATCHES.find(x => x.id === PARTIDO_SOLO);
+    const label = PARTIDO_SOLO && m ? `${m.local} vs ${m.visitante}` : 'pronóstico';
+    showToast(`✅ ¡${label} guardado!`, 'success');
+
   } catch (e) {
     showToast('❌ Error al guardar. Revisa la URL del Apps Script.', 'error');
     console.error(e);
