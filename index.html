@@ -5,747 +5,552 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>⚽ Pronóstico Mundialista · Visiting Galápagos 2026</title>
   <style>
-    /* ── Variables ──────────────────────────────────────────────── */
     :root {
-      --navy:        #0f3460;
-      --navy-mid:    #16213e;
-      --navy-dark:   #0a1f3a;
-      --red:         #e94560;
-      --red-dark:    #c73650;
-      --gold:        #f5c842;
-      --silver:      #c0c0c0;
-      --bronze:      #cd7f32;
-      --green:       #4caf50;
-      --text:        #e0e8f0;
-      --text-muted:  #7a9bbf;
-      --surface:     #1a3050;
-      --surface2:    #1e3860;
-      --border:      #2a4a70;
-      --white:       #ffffff;
-      --radius:      10px;
-      --radius-sm:   6px;
-      --shadow:      0 4px 20px rgba(0,0,0,0.4);
+      --navy:       #0f3460;
+      --navy-mid:   #16213e;
+      --navy-dark:  #0a1f3a;
+      --red:        #e94560;
+      --gold:       #f5c842;
+      --silver:     #c0c0c0;
+      --bronze:     #cd7f32;
+      --green:      #4caf50;
+      --text:       #e0e8f0;
+      --muted:      #7a9bbf;
+      --surface:    #1a3050;
+      --surface2:   #1e3860;
+      --border:     #2a4a70;
+      --radius:     12px;
+      --shadow:     0 4px 24px rgba(0,0,0,0.45);
     }
 
-    /* ── Reset & Base ───────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--navy-dark);
-      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(160deg, var(--navy-dark) 0%, var(--navy-mid) 60%, #1a1a2e 100%);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      color: var(--text);
     }
 
-    /* ── Header ─────────────────────────────────────────────────── */
+    /* ── Header ── */
     header {
-      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
-      border-bottom: 3px solid var(--red);
-      padding: 20px 16px 14px;
-      text-align: center;
-    }
-    header h1 {
-      font-size: clamp(1.3rem, 4vw, 1.9rem);
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      color: var(--white);
-    }
-    header h1 span { color: var(--red); }
-    header p {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    /* ── Tabs Nav ───────────────────────────────────────────────── */
-    nav.tabs {
+      background: rgba(15,52,96,0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
       display: flex;
-      background: var(--navy-mid);
-      border-bottom: 2px solid var(--border);
-      overflow-x: auto;
-      scrollbar-width: none;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    nav.tabs::-webkit-scrollbar { display: none; }
+    header .logo { font-size: 1.5rem; }
+    header h1   { font-size: 1rem; font-weight: 700; line-height: 1.2; }
+    header h1 span { display: block; font-size: 0.72rem; font-weight: 400; color: var(--muted); }
+    .header-tabs { margin-left: auto; display: flex; gap: 6px; }
     .tab-btn {
-      flex: 1;
-      min-width: 80px;
-      padding: 12px 8px;
       background: none;
-      border: none;
-      border-bottom: 3px solid transparent;
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      font-weight: 600;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 20px;
       cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
+      font-size: 0.8rem;
+      transition: all .2s;
     }
-    .tab-btn:hover  { color: var(--text); background: rgba(255,255,255,0.04); }
-    .tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
-    .tab-btn .icon  { display: block; font-size: 1.2rem; margin-bottom: 2px; }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
 
-    /* ── Main content ───────────────────────────────────────────── */
-    main { flex: 1; padding: 20px 16px; max-width: 860px; margin: 0 auto; width: 100%; }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
+    /* ── Layout ── */
+    main { max-width: 680px; margin: 0 auto; padding: 24px 16px 60px; }
 
-    /* ── Cards & Sections ───────────────────────────────────────── */
+    /* ── Cards ── */
     .card {
-      background: var(--surface);
+      background: rgba(26,48,80,0.7);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px;
+      padding: 24px;
       margin-bottom: 16px;
-      box-shadow: var(--shadow);
     }
-    .card h2 {
-      font-size: 0.95rem;
+    .card h2 { font-size: 1.1rem; margin-bottom: 16px; }
+
+    /* ── Match schedule grid ── */
+    .day-label {
+      font-size: 0.72rem;
       font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-    .section-title {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: var(--red);
-      margin: 20px 0 10px;
-      padding-left: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 24px 0 10px;
     }
+    .day-label:first-child { margin-top: 0; }
 
-    /* ── Form inputs ────────────────────────────────────────────── */
-    .form-group { margin-bottom: 16px; }
-    label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-    input[type="text"],
-    input[type="password"],
-    input[type="number"] {
-      background: var(--navy-dark);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-size: 0.95rem;
-      padding: 10px 12px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    input[type="text"],
-    input[type="password"] { width: 100%; }
-    input:focus { border-color: var(--red); }
-    input[type="number"] {
-      width: 54px;
-      text-align: center;
-      padding: 8px 6px;
-      -moz-appearance: textfield;
-    }
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-    /* ── Buttons ────────────────────────────────────────────────── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-primary {
-      background: var(--red);
-      color: var(--white);
-      width: 100%;
-      padding: 13px;
-      font-size: 1rem;
-    }
-    .btn-primary:hover:not(:disabled) { background: var(--red-dark); transform: translateY(-1px); }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn-secondary {
-      background: var(--navy);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-secondary:hover { background: var(--surface2); }
-    .btn-outline {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      font-size: 0.78rem;
-      padding: 5px 10px;
-    }
-    .btn-outline:hover { border-color: var(--red); color: var(--red); }
-
-    /* ── Match Card ─────────────────────────────────────────────── */
     .match-card {
-      background: var(--navy-dark);
+      background: rgba(26,48,80,0.7);
       border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px;
+      border-radius: var(--radius);
+      padding: 14px 16px;
       margin-bottom: 10px;
-      transition: border-color 0.2s;
-    }
-    .match-card:hover { border-color: var(--navy); }
-    .match-card.has-pick { border-left: 3px solid var(--red); }
-
-    .match-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      gap: 12px;
+      transition: border-color .2s;
+    }
+    .match-card:hover { border-color: rgba(233,69,96,0.4); }
+    .match-card.locked { opacity: 0.6; }
+
+    .match-teams {
+      flex: 1;
+      font-size: 0.92rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .match-teams small {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 2px;
     }
     .match-id {
       font-size: 0.68rem;
       font-weight: 700;
-      color: var(--red);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .match-date {
-      font-size: 0.68rem;
-      color: var(--text-muted);
-    }
-
-    .match-body {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .team-name {
-      flex: 1;
-      font-size: 0.88rem;
-      font-weight: 600;
-    }
-    .team-name.home { text-align: right; }
-    .team-name.away { text-align: left;  }
-    .score-inputs {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .score-dash { color: var(--text-muted); font-weight: 700; font-size: 1.1rem; }
-
-    .quick-picks {
-      display: flex;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .qp-btn {
-      flex: 1;
-      padding: 5px 4px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 0.72rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.18s;
+      color: var(--muted);
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      min-width: 30px;
       text-align: center;
     }
-    .qp-btn:hover           { background: var(--surface2); color: var(--text); }
-    .qp-btn.active-local    { background: #0a3d62; color: var(--gold); border-color: var(--gold); }
-    .qp-btn.active-empate   { background: #2d2d2d; color: var(--silver); border-color: var(--silver); }
-    .qp-btn.active-visitante{ background: #3d0a1a; color: var(--red); border-color: var(--red); }
-    .qp-btn.clear           { color: var(--text-muted); font-size: 0.68rem; }
 
-    /* ── Date separator ─────────────────────────────────────────── */
-    .date-group-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 18px 0 10px;
-      font-size: 0.78rem;
+    .btn-apostar {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
       font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background .2s;
     }
-    .date-group-title::before,
-    .date-group-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── Ranking Table ──────────────────────────────────────────── */
-    .ranking-table { width: 100%; border-collapse: collapse; }
-    .ranking-table th {
-      text-align: left;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-muted);
-      padding: 8px 10px;
-      border-bottom: 2px solid var(--border);
-    }
-    .ranking-table td {
-      padding: 10px 10px;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-    }
-    .ranking-table tr:last-child td { border-bottom: none; }
-    .ranking-table tr:hover td     { background: rgba(255,255,255,0.03); }
-
-    /* ── Per-match ranking cards ─────────────────────────────────── */
-    .match-ranking-card {
+    .btn-apostar:hover { background: #c73650; }
+    .btn-cerrado {
       background: var(--surface2);
+      color: var(--muted);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      margin-bottom: 16px;
-      overflow: hidden;
-    }
-    .match-card-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      background: rgba(15,52,96,0.55);
-      font-size: 0.88rem;
-      flex-wrap: wrap;
-    }
-    .match-card-header .pool-badge {
-      margin-left: auto;
-      background: var(--gold);
-      color: #222;
-      font-weight: 800;
+      padding: 7px 14px;
+      border-radius: 20px;
       font-size: 0.78rem;
-      padding: 2px 8px;
-      border-radius: 12px;
+      white-space: nowrap;
     }
-    .match-ranking-card .ranking-table {
-      font-size: 0.84rem;
+    .btn-jugado {
+      background: rgba(76,175,80,0.15);
+      color: var(--green);
+      border: 1px solid rgba(76,175,80,0.3);
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
     }
-    .earnings-section { margin-bottom: 28px; }
-    .section-sub { font-size: 1rem; color: var(--text-muted); margin: 0 0 14px; }
 
-    .pos-badge {
-      display: inline-flex;
+    /* ── Single-match bet form ── */
+    #view-bet { display: none; }
+    .bet-match-header {
+      text-align: center;
+      padding: 28px 20px 20px;
+    }
+    .bet-match-header .mid-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--surface2);
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .bet-teams {
+      display: flex;
       align-items: center;
       justify-content: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      font-size: 0.85rem;
+      gap: 16px;
+      font-size: 1.2rem;
       font-weight: 800;
     }
-    .pos-1 { background: var(--gold);   color: #222; }
-    .pos-2 { background: var(--silver); color: #222; }
-    .pos-3 { background: var(--bronze); color: #fff; }
-    .pos-n { background: var(--surface2); color: var(--text-muted); }
-
-    .pts-badge {
-      background: var(--navy);
-      color: var(--gold);
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 0.88rem;
-      font-weight: 800;
-    }
-    .prize-badge {
-      background: rgba(249,196,66,0.15);
-      color: var(--gold);
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 0.82rem;
+    .bet-vs {
+      font-size: 0.75rem;
       font-weight: 700;
+      color: var(--muted);
+      background: var(--surface2);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .bet-time {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 8px;
     }
 
-    /* ── Results mini-grid ──────────────────────────────────────── */
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 8px;
-    }
-    .result-item {
-      background: var(--navy-dark);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 10px 12px;
+    /* Score inputs */
+    .score-row {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
+      justify-content: center;
+      gap: 16px;
+      margin: 20px 0;
     }
-    .result-item .res-id { color: var(--red); font-weight: 700; font-size: 0.7rem; min-width: 28px; }
-    .result-item .res-teams { flex: 1; color: var(--text-muted); }
-    .result-item .res-score {
-      font-weight: 800;
-      font-size: 0.95rem;
-      color: var(--text);
-      background: var(--surface2);
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-    .result-item.played { border-left: 3px solid var(--green); }
-    .result-item.pending { opacity: 0.55; }
-
-    /* ── Toast ──────────────────────────────────────────────────── */
-    #toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px 24px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      box-shadow: var(--shadow);
-      z-index: 999;
-      transition: transform 0.3s ease;
-      min-width: 220px;
+    .score-team {
       text-align: center;
+      flex: 1;
+      max-width: 140px;
     }
-    #toast.show { transform: translateX(-50%) translateY(0); }
-    #toast.success { border-color: var(--green); color: var(--green); }
-    #toast.error   { border-color: var(--red);   color: var(--red);   }
+    .score-team label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .score-input {
+      width: 100%;
+      background: var(--surface2);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 2.2rem;
+      font-weight: 800;
+      text-align: center;
+      padding: 12px 8px;
+      outline: none;
+      transition: border-color .2s;
+      -moz-appearance: textfield;
+    }
+    .score-input::-webkit-outer-spin-button,
+    .score-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .score-input:focus { border-color: var(--red); }
+    .score-dash { font-size: 2rem; font-weight: 800; color: var(--muted); }
 
-    /* ── Loading spinner ─────────────────────────────────────────── */
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .form-group input[type="text"] {
+      width: 100%;
+      background: var(--surface2);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 1rem;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-group input[type="text"]:focus { border-color: var(--red); }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+      margin-top: 4px;
+    }
+    .btn-primary:hover:not(:disabled) { background: #c73650; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Lock overlay */
+    .lock-card {
+      text-align: center;
+      padding: 32px 20px;
+    }
+    .lock-icon { font-size: 3rem; margin-bottom: 12px; }
+    .lock-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+    /* Feedback */
+    .feedback {
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      margin-top: 12px;
+      display: none;
+      line-height: 1.5;
+    }
+    .feedback.ok  { background: rgba(76,175,80,0.15); border: 1px solid rgba(76,175,80,0.4); color: #81c784; }
+    .feedback.err { background: rgba(233,69,96,0.15);  border: 1px solid rgba(233,69,96,0.4);  color: #ef9a9a; }
+
+    /* ── Spinner ── */
     .spinner {
-      width: 32px; height: 32px;
+      display: flex; justify-content: center; padding: 24px;
+    }
+    .spinner::after {
+      content: '';
+      width: 28px; height: 28px;
       border: 3px solid var(--border);
       border-top-color: var(--red);
       border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      margin: 20px auto;
+      animation: spin .7s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── Admin: password screen ─────────────────────────────────── */
-    #admin-lock { text-align: center; padding: 20px 0; }
-    #admin-lock .lock-icon { font-size: 3rem; margin-bottom: 12px; }
-    #admin-form-wrapper { display: none; }
+    /* ── Ranking ── */
+    .rtable { width: 100%; border-collapse: collapse; }
+    .rtable th {
+      text-align: left;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-bottom: 2px solid var(--border);
+    }
+    .rtable td {
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+    .rtable tr:last-child td { border-bottom: none; }
+    .rtable tr:hover td { background: rgba(255,255,255,0.02); }
 
-    /* ── Admin score input rows ─────────────────────────────────── */
-    .admin-match {
+    .pts-badge {
+      display: inline-block;
+      background: var(--navy);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 0.82rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+    .prize-badge {
+      display: inline-block;
+      background: rgba(245,200,66,0.12);
+      border: 1px solid rgba(245,200,66,0.35);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 2px 9px;
+      border-radius: 12px;
+    }
+
+    .match-rank-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .match-rank-header {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 12px;
-      background: var(--navy-dark);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      margin-bottom: 8px;
+      padding: 9px 14px;
+      background: rgba(15,52,96,0.6);
+      font-size: 0.84rem;
+      flex-wrap: wrap;
     }
-    .admin-match .am-id   { font-size: 0.7rem; font-weight: 800; color: var(--red); min-width: 28px; }
-    .admin-match .am-desc { flex: 1; font-size: 0.82rem; color: var(--text-muted); }
-    .admin-match .am-score { display: flex; align-items: center; gap: 6px; }
-    .admin-match .am-score input { width: 48px; }
-
-    /* ── Reglas ─────────────────────────────────────────────────── */
-    .rule-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px;
-      background: var(--navy-dark);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      margin-bottom: 8px;
-    }
-    .rule-pts {
-      min-width: 48px;
-      height: 48px;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      font-weight: 900;
-    }
-    .rule-pts.gold  { background: rgba(245,200,66,0.15); color: var(--gold); }
-    .rule-pts.blue  { background: rgba(15,52,96,0.8);    color: #7ec8e3; }
-    .rule-pts.grey  { background: rgba(255,255,255,0.05); color: var(--text-muted); }
-    .rule-text h3   { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; }
-    .rule-text p    { font-size: 0.8rem; color: var(--text-muted); }
-
-    .prize-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      background: var(--navy-dark);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      margin-bottom: 8px;
-    }
-    .prize-pos { font-size: 1.4rem; }
-    .prize-label { font-weight: 700; font-size: 0.9rem; }
-    .prize-amount { font-weight: 800; font-size: 1.1rem; color: var(--gold); }
-
-    /* ── Footer ─────────────────────────────────────────────────── */
-    footer {
-      text-align: center;
-      padding: 16px;
+    .match-rank-header .pool {
+      margin-left: auto;
+      background: rgba(245,200,66,0.15);
+      border: 1px solid rgba(245,200,66,0.3);
+      color: var(--gold);
+      font-weight: 700;
       font-size: 0.72rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-      background: var(--navy-mid);
-      margin-top: auto;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .match-rank-card .rtable { font-size: 0.82rem; }
+
+    /* ── Admin ── */
+    .admin-match-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+    .admin-match-row:last-child { border-bottom: none; }
+    .score-mini {
+      width: 48px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 6px 4px;
+      outline: none;
+      -moz-appearance: textfield;
+    }
+    .score-mini::-webkit-outer-spin-button,
+    .score-mini::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .score-mini:focus { border-color: var(--red); }
+    .admin-dash { color: var(--muted); font-weight: 700; }
+    .section-day {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 18px 0 6px;
+    }
+    .section-day:first-child { margin-top: 0; }
+
+    .btn-save {
+      background: var(--navy);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all .2s;
+      margin-top: 16px;
+    }
+    .btn-save:hover { border-color: var(--red); color: var(--red); }
+
+    .result-chip {
+      display: inline-block;
+      background: rgba(76,175,80,0.15);
+      border: 1px solid rgba(76,175,80,0.35);
+      color: var(--green);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 2px 8px;
+      border-radius: 8px;
     }
 
-    /* ── Responsive ─────────────────────────────────────────────── */
+    /* ── Panels ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-decoration: none;
+      margin-bottom: 16px;
+      cursor: pointer;
+    }
+    .back-link:hover { color: var(--text); }
+
     @media (max-width: 480px) {
-      .match-body { gap: 6px; }
-      .team-name  { font-size: 0.78rem; }
-      input[type="number"] { width: 46px; }
-      .ranking-table th:nth-child(4),
-      .ranking-table td:nth-child(4) { display: none; }
+      header h1 { font-size: 0.88rem; }
+      .bet-teams { font-size: 1rem; gap: 10px; }
+      .score-input { font-size: 1.8rem; padding: 10px 6px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ─── HEADER ────────────────────────────────────────────────────── -->
 <header>
-  <h1>⚽ Pronóstico Mundialista <span>2026</span></h1>
-  <p>Visiting Galápagos · 16avos de Final · Pozo: $36</p>
+  <span class="logo">⚽</span>
+  <h1>Pronóstico Mundialista
+    <span>Visiting Galápagos 2026</span>
+  </h1>
+  <div class="header-tabs" id="main-tabs">
+    <button class="tab-btn active" onclick="showPanel('schedule')">Partidos</button>
+    <button class="tab-btn" onclick="showPanel('ranking')">Ranking</button>
+    <button class="tab-btn" onclick="showPanel('admin')">Admin</button>
+  </div>
 </header>
 
-<!-- ─── TABS NAV ──────────────────────────────────────────────────── -->
-<nav class="tabs" role="tablist">
-  <button class="tab-btn active" onclick="showTab('pronostico')" id="tab-btn-pronostico">
-    <span class="icon">📝</span>Pronóstico
-  </button>
-  <button class="tab-btn" onclick="showTab('ranking')" id="tab-btn-ranking">
-    <span class="icon">🏆</span>Ranking
-  </button>
-  <button class="tab-btn" onclick="showTab('resultados')" id="tab-btn-resultados">
-    <span class="icon">⚽</span>Resultados
-  </button>
-  <button class="tab-btn" onclick="showTab('reglas')" id="tab-btn-reglas">
-    <span class="icon">📋</span>Reglas
-  </button>
-</nav>
-
-<!-- ─── MAIN ──────────────────────────────────────────────────────── -->
 <main>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- TAB 1: PRONÓSTICO                                             -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <section id="panel-pronostico" class="tab-panel active">
-    <div class="card">
-      <h2>📝 Tu pronóstico</h2>
-      <div class="form-group">
-        <label for="nombre">Tu nombre</label>
-        <input type="text" id="nombre" placeholder="Escribe tu nombre..." autocomplete="off" />
-      </div>
-      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
-        Solo completa los partidos que quieras apostar. Los demás quedarán como <strong>—</strong>
-      </p>
+  <!-- ══ VIEW: SINGLE BET (shown when ?p=pXX) ══════════════════════════ -->
+  <div id="view-bet">
+    <a class="back-link" onclick="goHome()">← Volver a partidos</a>
+
+    <div class="card" id="bet-card">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
+  <!-- ══ PANELS (shown when no ?p=) ════════════════════════════════════ -->
+  <div id="view-main">
+
+    <!-- SCHEDULE -->
+    <div class="panel active" id="panel-schedule">
+      <div id="schedule-content"><div class="spinner"></div></div>
     </div>
 
-    <div id="matches-form"></div>
-
-    <button class="btn btn-primary" id="btn-guardar" onclick="guardarPronostico()">
-      💾 Guardar pronóstico
-    </button>
-  </section>
-
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- TAB 2: RANKING                                                -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <section id="panel-ranking" class="tab-panel">
-    <div class="card">
-      <h2>🏆 Tabla de posiciones</h2>
-      <div style="display:flex; justify-content:flex-end; margin-bottom:14px;">
-        <button class="btn btn-secondary" onclick="cargarRanking()" style="padding:8px 14px; font-size:0.82rem;">
-          🔄 Actualizar
-        </button>
-      </div>
-      <div id="ranking-content">
-        <div class="spinner"></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>⚽ Resultados actuales</h2>
-      <div id="ranking-resultados">
-        <div class="spinner"></div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- TAB 3: RESULTADOS (admin)                                     -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <section id="panel-resultados" class="tab-panel">
-    <div class="card">
-      <h2>🔐 Panel del organizador</h2>
-
-      <!-- Lock screen -->
-      <div id="admin-lock">
-        <div class="lock-icon">🔒</div>
-        <p style="color:var(--text-muted); margin-bottom:16px; font-size:0.88rem;">
-          Zona exclusiva del organizador
-        </p>
-        <div class="form-group" style="max-width:280px; margin:0 auto;">
-          <label for="admin-pass">Contraseña</label>
-          <input type="password" id="admin-pass" placeholder="••••••••••••"
-                 onkeydown="if(event.key==='Enter') verificarPassword()" />
+    <!-- RANKING -->
+    <div class="panel" id="panel-ranking">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <h2 style="margin:0;">🏆 Ranking</h2>
+          <button class="btn-apostar" onclick="loadRanking()" style="font-size:0.75rem;padding:6px 12px;">🔄 Actualizar</button>
         </div>
-        <button class="btn btn-primary" onclick="verificarPassword()"
-                style="max-width:280px; margin:10px auto 0;">
-          Acceder
-        </button>
-        <p id="admin-pass-error"
-           style="color:var(--red); font-size:0.8rem; margin-top:8px; display:none;">
-          Contraseña incorrecta
-        </p>
-      </div>
-
-      <!-- Admin form (hidden until authenticated) -->
-      <div id="admin-form-wrapper">
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px;">
-          Ingresa el marcador real de cada partido. Dejar en blanco los no jugados.
-          <strong style="color:var(--red);">Nota:</strong> usa 0-0 solo cuando el partido no se ha jugado.
-          Si el resultado real es empate 0-0, ingresa igualmente 0-0 (se contará por el sistema).
-        </p>
-        <div id="admin-matches-form"></div>
-        <button class="btn btn-primary" id="btn-guardar-resultado" onclick="guardarResultados()">
-          💾 Guardar resultados
-        </button>
+        <div id="ranking-content"><div class="spinner"></div></div>
       </div>
     </div>
-  </section>
 
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- TAB 4: REGLAS                                                 -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <section id="panel-reglas" class="tab-panel">
-    <div class="card">
-      <h2>📋 Sistema de puntos</h2>
-
-      <div class="rule-item">
-        <div class="rule-pts gold">3</div>
-        <div class="rule-text">
-          <h3>Marcador exacto</h3>
-          <p>Acertaste el resultado exacto del partido. Ej: pronosticaste 2-1 y ganó 2-1.</p>
+    <!-- ADMIN -->
+    <div class="panel" id="panel-admin">
+      <div class="card">
+        <h2>🔐 Panel del organizador</h2>
+        <div id="admin-lock" style="text-align:center;padding:20px 0;">
+          <div style="font-size:2.5rem;margin-bottom:12px;">🔒</div>
+          <p style="color:var(--muted);font-size:0.85rem;margin-bottom:16px;">Zona exclusiva del organizador</p>
+          <div style="max-width:260px;margin:0 auto;">
+            <input type="password" id="admin-pass" placeholder="Contraseña"
+                   style="width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:10px;color:var(--text);font-size:1rem;padding:11px 14px;outline:none;margin-bottom:10px;"
+                   onkeydown="if(event.key==='Enter')checkAdmin()" />
+            <button class="btn-primary" onclick="checkAdmin()">Acceder</button>
+            <p id="admin-err" style="color:var(--red);font-size:0.8rem;margin-top:8px;display:none;">Contraseña incorrecta</p>
+          </div>
         </div>
-      </div>
-      <div class="rule-item">
-        <div class="rule-pts blue">1</div>
-        <div class="rule-text">
-          <h3>Ganador o empate correcto</h3>
-          <p>Acertaste quién gana (o que hay empate) pero el marcador fue diferente.</p>
-        </div>
-      </div>
-      <div class="rule-item">
-        <div class="rule-pts grey">0</div>
-        <div class="rule-text">
-          <h3>Pronóstico incorrecto</h3>
-          <p>No acertaste el resultado del partido.</p>
+        <div id="admin-form" style="display:none;">
+          <p style="font-size:0.8rem;color:var(--muted);margin-bottom:14px;">Ingresa el marcador real de cada partido. Deja vacío los no jugados.</p>
+          <div id="admin-matches"></div>
+          <button class="btn-save" onclick="saveResults()">💾 Guardar resultados</button>
+          <div id="admin-feedback" class="feedback"></div>
         </div>
       </div>
     </div>
 
-    <div class="card">
-      <h2>💰 Distribución del pozo</h2>
-      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:6px;">
-        La apuesta es <strong style="color:var(--gold);">$3 por partido</strong>. Cada partido tiene su propio pozo independiente.
-      </p>
-      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px;">
-        12 participantes × $3 = <strong style="color:var(--gold);">$36 por partido</strong>
-        &nbsp;·&nbsp; 16 partidos = <strong style="color:var(--gold);">$576 en total</strong>
-      </p>
-
-      <div class="prize-row">
-        <span class="prize-pos">🥇</span>
-        <span class="prize-label">1.° del partido</span>
-        <span class="prize-amount">$21.60 <span style="font-size:0.7rem; color:var(--text-muted);">(60%)</span></span>
-      </div>
-      <div class="prize-row">
-        <span class="prize-pos">🥈</span>
-        <span class="prize-label">2.° del partido</span>
-        <span class="prize-amount">$9.00 <span style="font-size:0.7rem; color:var(--text-muted);">(25%)</span></span>
-      </div>
-      <div class="prize-row">
-        <span class="prize-pos">🥉</span>
-        <span class="prize-label">3.° del partido</span>
-        <span class="prize-amount">$5.40 <span style="font-size:0.7rem; color:var(--text-muted);">(15%)</span></span>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>📅 Partidos — 16avos de Final</h2>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:8px;">
-        <div id="reglas-partidos"></div>
-      </div>
-    </div>
-  </section>
+  </div><!-- /view-main -->
 
 </main>
 
-<!-- ─── FOOTER ────────────────────────────────────────────────────── -->
-<footer>
-  Pronóstico Mundialista Visiting Galápagos · Desarrollado por <strong>Web Master JRGL</strong>
-</footer>
-
-<!-- ─── TOAST ─────────────────────────────────────────────────────── -->
-<div id="toast"></div>
-
-
-<!-- ─── JAVASCRIPT ────────────────────────────────────────────────── -->
 <script>
 // ══════════════════════════════════════════════════════════════════════
-// ⚠️  CONFIGURACIÓN — EDITAR ESTAS DOS CONSTANTES ANTES DE SUBIR
+//  CONFIG
 // ══════════════════════════════════════════════════════════════════════
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwnSqt9TBrqk3fwon78DNkUJjGOJKSW6GUSt4n_4a3oQWFwJd5JZrC1kgabSTvfFMc/exec';
-// ══════════════════════════════════════════════════════════════════════
+const SCRIPT_URL    = 'https://script.google.com/macros/s/AKfycbwnSqt9TBrqk3fwon78DNkUJjGOJKSW6GUSt4n_4a3oQWFwJd5JZrC1kgabSTvfFMc/exec';
+const ADMIN_PASS    = 'visiting2026';
+const PRIZE_PER     = 3;   // $3 por persona por partido
+const PRIZE_PCT     = { 1: 0.60, 2: 0.25, 3: 0.15 };
 
-const ADMIN_PASSWORD = 'visiting2026';
-const PRIZE_PER_PERSON = 3;           // $3 por persona por partido
-const PRIZE_PCT = { 1: 0.60, 2: 0.25, 3: 0.15 };
-
-const MATCHES = [
-  { id:'p01', local:'Canadá',         visitante:'Sudáfrica',  fecha:'Dom 29 jun' },
-  { id:'p02', local:'Brasil',          visitante:'Japón',      fecha:'Dom 29 jun' },
-  { id:'p03', local:'Alemania',        visitante:'Paraguay',   fecha:'Dom 29 jun' },
-  { id:'p04', local:'Países Bajos',   visitante:'Marruecos',  fecha:'Dom 29 jun' },
-  { id:'p05', local:'Costa de Marfil',visitante:'Noruega',    fecha:'Lun 30 jun' },
-  { id:'p06', local:'Francia',         visitante:'Suecia',     fecha:'Lun 30 jun' },
-  { id:'p07', local:'México',          visitante:'Ecuador',    fecha:'Lun 30 jun' },
-  { id:'p08', local:'Bélgica',         visitante:'Senegal',    fecha:'Mar 1 jul'  },
-  { id:'p09', local:'Estados Unidos', visitante:'Bosnia',     fecha:'Mar 1 jul'  },
-  { id:'p10', local:'Inglaterra',     visitante:'RD Congo',   fecha:'Mar 1 jul'  },
-  { id:'p11', local:'España',          visitante:'Austria',    fecha:'Mié 2 jul'  },
-  { id:'p12', local:'Portugal',        visitante:'Croacia',    fecha:'Mié 2 jul'  },
-  { id:'p13', local:'Suiza',           visitante:'Argelia',    fecha:'Mié 2 jul'  },
-  { id:'p14', local:'Australia',       visitante:'Egipto',     fecha:'Jue 3 jul'  },
-  { id:'p15', local:'Argentina',      visitante:'Cabo Verde', fecha:'Jue 3 jul'  },
-  { id:'p16', local:'Colombia',       visitante:'Ghana',      fecha:'Jue 3 jul'  },
-];
-
-// ══════════════════════════════════════════════════════════════════════
-// ⚠️  HORARIOS DE INICIO DE PARTIDOS (ISO 8601 en hora de Ecuador UTC-5)
-//     Actualiza estos valores con los horarios reales del torneo.
-//     El formulario se bloqueará automáticamente cuando el partido empiece.
-// ══════════════════════════════════════════════════════════════════════
+// ── Horarios reales (hora Ecuador UTC-5) ───────────────────────────
 const HORARIOS = {
   p01: new Date('2026-06-28T14:00:00-05:00'), // Canadá vs Sudáfrica    — dom 28 jun, 3pm ET
   p02: new Date('2026-06-29T12:00:00-05:00'), // Brasil vs Japón         — lun 29 jun, 1pm ET
@@ -765,599 +570,451 @@ const HORARIOS = {
   p16: new Date('2026-07-03T20:30:00-05:00'), // Colombia vs Ghana       — vie 3 jul, 9:30pm ET
 };
 
-// Detectar modo: ¿se abrió con ?p=p07 (partido único)?
-const URL_PARAMS   = new URLSearchParams(window.location.search);
-const PARTIDO_SOLO = URL_PARAMS.get('p'); // "p07" o null
+const MATCHES = [
+  { id:'p01', local:'Canadá',          visitante:'Sudáfrica',   fecha:'Dom 28 jun' },
+  { id:'p02', local:'Brasil',           visitante:'Japón',       fecha:'Lun 29 jun' },
+  { id:'p03', local:'Alemania',         visitante:'Paraguay',    fecha:'Lun 29 jun' },
+  { id:'p04', local:'Países Bajos',    visitante:'Marruecos',   fecha:'Lun 29 jun' },
+  { id:'p05', local:'Costa de Marfil', visitante:'Noruega',     fecha:'Mar 30 jun' },
+  { id:'p06', local:'Francia',          visitante:'Suecia',      fecha:'Mar 30 jun' },
+  { id:'p07', local:'México',           visitante:'Ecuador',     fecha:'Mar 30 jun' },
+  { id:'p08', local:'Bélgica',         visitante:'Senegal',     fecha:'Mié 1 jul'  },
+  { id:'p09', local:'Estados Unidos',  visitante:'Bosnia',      fecha:'Mié 1 jul'  },
+  { id:'p10', local:'Inglaterra',       visitante:'RD Congo',    fecha:'Mié 1 jul'  },
+  { id:'p11', local:'España',          visitante:'Austria',     fecha:'Jue 2 jul'  },
+  { id:'p12', local:'Portugal',         visitante:'Croacia',     fecha:'Jue 2 jul'  },
+  { id:'p13', local:'Suiza',           visitante:'Argelia',     fecha:'Jue 2 jul'  },
+  { id:'p14', local:'Australia',        visitante:'Egipto',      fecha:'Vie 3 jul'  },
+  { id:'p15', local:'Argentina',        visitante:'Cabo Verde',  fecha:'Vie 3 jul'  },
+  { id:'p16', local:'Colombia',         visitante:'Ghana',       fecha:'Vie 3 jul'  },
+];
+
+// ══════════════════════════════════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════════════════════════════════
+const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
 function isLocked(pid) {
   const h = HORARIOS[pid];
-  return h ? new Date() >= h : false;
+  return h ? Date.now() >= h.getTime() : false;
 }
 
-function formatHora(pid) {
+function fmtHora(pid) {
   const h = HORARIOS[pid];
   if (!h) return '';
   return h.toLocaleString('es-EC', { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
 }
 
-// ─── Tab switcher ─────────────────────────────────────────────────────
-function showTab(name) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + name).classList.add('active');
-  document.getElementById('tab-btn-' + name).classList.add('active');
-
-  if (name === 'ranking') cargarRanking();
+async function apiFetch(action) {
+  const r = await fetch(SCRIPT_URL + '?action=' + action + '&t=' + Date.now());
+  return r.json();
 }
 
-// ─── Toast ────────────────────────────────────────────────────────────
-let toastTimer;
-function showToast(msg, type = 'info') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'show ' + type;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { el.className = ''; }, 3500);
-}
-
-// ─── Build pronóstico form ────────────────────────────────────────────
-function buildPronosticoForm() {
-  const container = document.getElementById('matches-form');
-  let currentDate = '';
-  let html = '';
-
-  // Si hay ?p=pXX en la URL, mostrar solo ese partido
-  const lista = PARTIDO_SOLO
-    ? MATCHES.filter(m => m.id === PARTIDO_SOLO)
-    : MATCHES;
-
-  if (PARTIDO_SOLO && lista.length === 0) {
-    container.innerHTML = '<p style="color:#e94560;text-align:center;padding:2rem">Partido no encontrado: ' + PARTIDO_SOLO + '</p>';
-    return;
-  }
-
-  lista.forEach(m => {
-    const locked = isLocked(m.id);
-    const hora   = formatHora(m.id);
-
-    if (!PARTIDO_SOLO && m.fecha !== currentDate) {
-      currentDate = m.fecha;
-      html += `<div class="date-group-title">${m.fecha}</div>`;
-    }
-
-    if (locked) {
-      // Partido ya empezó: mostrar tarjeta bloqueada
-      html += `
-        <div class="match-card locked" id="mc-${m.id}">
-          <div class="match-header">
-            <span class="match-id">${m.id.toUpperCase()}</span>
-            <span class="match-date">${m.fecha}</span>
-          </div>
-          <div class="match-body">
-            <span class="team-name home">${m.local}</span>
-            <div class="score-inputs" style="opacity:.4;pointer-events:none">
-              <input type="number" id="s-${m.id}-l" disabled placeholder="—" />
-              <span class="score-dash">–</span>
-              <input type="number" id="s-${m.id}-v" disabled placeholder="—" />
-            </div>
-            <span class="team-name away">${m.visitante}</span>
-          </div>
-          <div style="text-align:center;padding:.4rem .5rem .8rem;color:#e94560;font-size:.8rem;font-weight:600">
-            🔒 Partido iniciado · ${hora}
-          </div>
-        </div>`;
-    } else {
-      html += `
-        <div class="match-card" id="mc-${m.id}">
-          <div class="match-header">
-            <span class="match-id">${m.id.toUpperCase()}</span>
-            <span class="match-date">${hora || m.fecha}</span>
-          </div>
-          <div class="match-body">
-            <span class="team-name home">${m.local}</span>
-            <div class="score-inputs">
-              <input type="number" id="s-${m.id}-l" min="0" max="20"
-                     oninput="onScoreInput('${m.id}')" placeholder="—" />
-              <span class="score-dash">–</span>
-              <input type="number" id="s-${m.id}-v" min="0" max="20"
-                     oninput="onScoreInput('${m.id}')" placeholder="—" />
-            </div>
-            <span class="team-name away">${m.visitante}</span>
-          </div>
-          <div class="quick-picks">
-            <button class="qp-btn" id="qp-${m.id}-l"
-                    onclick="quickPick('${m.id}','local')">🏠 Local</button>
-            <button class="qp-btn" id="qp-${m.id}-e"
-                    onclick="quickPick('${m.id}','empate')">🤝 Empate</button>
-            <button class="qp-btn" id="qp-${m.id}-v"
-                    onclick="quickPick('${m.id}','visitante')">✈️ Visitante</button>
-            <button class="qp-btn clear" onclick="clearPick('${m.id}')">✕</button>
-          </div>
-        </div>`;
-    }
+async function apiPost(body) {
+  const r = await fetch(SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(body)
   });
-
-  container.innerHTML = html;
-
-  // Si es modo partido único y está bloqueado, ocultar el botón de guardar
-  if (PARTIDO_SOLO && lista.length > 0 && isLocked(lista[0].id)) {
-    const btn = document.getElementById('btn-guardar');
-    if (btn) btn.style.display = 'none';
-  }
+  return r.json();
 }
 
-function onScoreInput(id) {
-  const l = document.getElementById('s-' + id + '-l').value;
-  const v = document.getElementById('s-' + id + '-v').value;
-  const card = document.getElementById('mc-' + id);
+// ══════════════════════════════════════════════════════════════════════
+//  ROUTING
+// ══════════════════════════════════════════════════════════════════════
+const params  = new URLSearchParams(location.search);
+const BET_PID = params.get('p'); // "p07" or null
 
-  if (l !== '' && v !== '') {
-    card.classList.add('has-pick');
-    updateQuickPickHighlight(id, parseInt(l), parseInt(v));
+document.addEventListener('DOMContentLoaded', () => {
+  if (BET_PID) {
+    showBetView(BET_PID);
   } else {
-    card.classList.remove('has-pick');
-    clearQuickHighlights(id);
+    document.getElementById('view-main').style.display = 'block';
+    loadSchedule();
   }
+});
+
+function goHome() {
+  location.href = location.pathname;
 }
 
-function quickPick(id, tipo) {
-  const lInput = document.getElementById('s-' + id + '-l');
-  const vInput = document.getElementById('s-' + id + '-v');
+// ══════════════════════════════════════════════════════════════════════
+//  PANEL NAVIGATION (main view)
+// ══════════════════════════════════════════════════════════════════════
+let activePanel = 'schedule';
 
-  if (tipo === 'local')     { lInput.value = 1; vInput.value = 0; }
-  if (tipo === 'empate')    { lInput.value = 1; vInput.value = 1; }
-  if (tipo === 'visitante') { lInput.value = 0; vInput.value = 1; }
-
-  document.getElementById('mc-' + id).classList.add('has-pick');
-  updateQuickPickHighlight(id, parseInt(lInput.value), parseInt(vInput.value));
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  activePanel = name;
+  if (name === 'ranking') loadRanking();
 }
 
-function clearPick(id) {
-  document.getElementById('s-' + id + '-l').value = '';
-  document.getElementById('s-' + id + '-v').value = '';
-  document.getElementById('mc-' + id).classList.remove('has-pick');
-  clearQuickHighlights(id);
-}
-
-function updateQuickPickHighlight(id, l, v) {
-  clearQuickHighlights(id);
-  const sign = Math.sign(l - v);
-  if (sign > 0) document.getElementById('qp-' + id + '-l').classList.add('active-local');
-  else if (sign === 0) document.getElementById('qp-' + id + '-e').classList.add('active-empate');
-  else document.getElementById('qp-' + id + '-v').classList.add('active-visitante');
-}
-
-function clearQuickHighlights(id) {
-  ['l','e','v'].forEach(s => {
-    const el = document.getElementById('qp-' + id + '-' + s);
-    if (el) el.className = 'qp-btn' + (s === '' ? ' clear' : '');
-  });
-  // reset clear button
-  const clr = document.querySelector(`#mc-${id} .qp-btn.clear`);
-  if (clr) clr.className = 'qp-btn clear';
-}
-
-// ─── Guardar pronóstico ───────────────────────────────────────────────
-async function guardarPronostico() {
-  const nombre = document.getElementById('nombre').value.trim();
-  if (!nombre) {
-    showToast('⚠️ Ingresa tu nombre', 'error');
-    document.getElementById('nombre').focus();
-    return;
-  }
-
-  // Validar que el partido del link no esté bloqueado
-  if (PARTIDO_SOLO && isLocked(PARTIDO_SOLO)) {
-    showToast('🔒 Este partido ya comenzó', 'error');
-    return;
-  }
-
-  const btn = document.getElementById('btn-guardar');
-  btn.disabled = true;
-  btn.textContent = '⏳ Guardando...';
-
+// ══════════════════════════════════════════════════════════════════════
+//  SCHEDULE VIEW
+// ══════════════════════════════════════════════════════════════════════
+async function loadSchedule() {
+  let results = {};
   try {
-    let payload = { tipo: 'pronostico', nombre };
+    const res = await apiFetch('resultados');
+    res.forEach(r => { results[r.partido] = r; });
+  } catch(e) {}
 
-    if (PARTIDO_SOLO) {
-      // Modo partido único: cargar predicciones existentes del participante y merge
-      let existentes = {};
-      try {
-        const url = APPS_SCRIPT_URL + '?action=ranking&t=' + Date.now();
-        const resp = await fetch(url);
-        const data = await resp.json();
-        const fila = data.find(r => String(r.nombre || '').trim().toLowerCase() === nombre.toLowerCase());
-        if (fila) {
-          MATCHES.forEach(m => { existentes[m.id] = fila[m.id] || '-'; });
-        }
-      } catch(e) { /* sin predicciones previas */ }
+  let html = '';
+  let currentDate = '';
 
-      // Partir de existentes (o '-') y actualizar solo el partido del link
-      MATCHES.forEach(m => { payload[m.id] = existentes[m.id] || '-'; });
-
-      const l = document.getElementById('s-' + PARTIDO_SOLO + '-l')?.value;
-      const v = document.getElementById('s-' + PARTIDO_SOLO + '-v')?.value;
-      if (!l && !v) {
-        showToast('⚠️ Ingresa un marcador', 'error');
-        btn.disabled = false;
-        btn.textContent = '💾 Guardar pronóstico';
-        return;
-      }
-      payload[PARTIDO_SOLO] = (l !== '' && v !== '') ? l + '-' + v : '-';
-
-    } else {
-      // Modo completo: recoger todos los partidos no bloqueados
-      let alguno = false;
-      MATCHES.forEach(m => {
-        if (isLocked(m.id)) {
-          payload[m.id] = '-'; // partido bloqueado → no enviar
-          return;
-        }
-        const l = document.getElementById('s-' + m.id + '-l').value;
-        const v = document.getElementById('s-' + m.id + '-v').value;
-        if (l !== '' && v !== '') {
-          payload[m.id] = l + '-' + v;
-          alguno = true;
-        } else {
-          payload[m.id] = '-';
-        }
-      });
-
-      if (!alguno) {
-        showToast('⚠️ Completa al menos un partido', 'error');
-        btn.disabled = false;
-        btn.textContent = '💾 Guardar pronóstico';
-        return;
-      }
+  MATCHES.forEach(m => {
+    if (m.fecha !== currentDate) {
+      currentDate = m.fecha;
+      html += `<div class="day-label">${m.fecha}</div>`;
     }
 
-    await postScript(payload);
-    const m = MATCHES.find(x => x.id === PARTIDO_SOLO);
-    const label = PARTIDO_SOLO && m ? `${m.local} vs ${m.visitante}` : 'pronóstico';
-    showToast(`✅ ¡${label} guardado!`, 'success');
+    const locked  = isLocked(m.id);
+    const hora    = fmtHora(m.id);
+    const res     = results[m.id];
+    const played  = res && !(Number(res.local) === 0 && Number(res.visitante) === 0);
+    const scoreStr = played ? `${res.local} - ${res.visitante}` : null;
 
-  } catch (e) {
-    showToast('❌ Error al guardar. Revisa la URL del Apps Script.', 'error');
-    console.error(e);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '💾 Guardar pronóstico';
-  }
+    let action;
+    if (played) {
+      action = `<span class="btn-jugado">${scoreStr}</span>`;
+    } else if (locked) {
+      action = `<span class="btn-cerrado">🔒 Cerrado</span>`;
+    } else {
+      action = `<a class="btn-apostar" href="?p=${m.id}">Apostar →</a>`;
+    }
+
+    html += `<div class="match-card ${locked && !played ? 'locked' : ''}">
+      <span class="match-id">${m.id.toUpperCase()}</span>
+      <div class="match-teams">
+        ${esc(m.local)} <span style="color:var(--muted);font-weight:400;">vs</span> ${esc(m.visitante)}
+        <small>${hora}</small>
+      </div>
+      ${action}
+    </div>`;
+  });
+
+  document.getElementById('schedule-content').innerHTML = html;
 }
 
-// ─── Cargar ranking ───────────────────────────────────────────────────
-async function cargarRanking() {
-  document.getElementById('ranking-content').innerHTML  = '<div class="spinner"></div>';
-  document.getElementById('ranking-resultados').innerHTML = '<div class="spinner"></div>';
+// ══════════════════════════════════════════════════════════════════════
+//  BET VIEW (single match)
+// ══════════════════════════════════════════════════════════════════════
+function showBetView(pid) {
+  document.getElementById('view-main').style.display  = 'none';
+  document.getElementById('view-bet').style.display   = 'block';
+  document.getElementById('main-tabs').style.display  = 'none';
+
+  const m = MATCHES.find(x => x.id === pid);
+  if (!m) {
+    document.getElementById('bet-card').innerHTML =
+      '<p style="color:var(--muted);text-align:center;padding:24px;">Partido no encontrado.</p>';
+    return;
+  }
+
+  const locked = isLocked(pid);
+  const hora   = fmtHora(pid);
+
+  if (locked) {
+    document.getElementById('bet-card').innerHTML = `
+      <div class="lock-card">
+        <div class="lock-icon">🔒</div>
+        <h2 style="margin-bottom:10px;">${esc(m.local)} vs ${esc(m.visitante)}</h2>
+        <p>El plazo para apostar en este partido ya cerró.<br>
+           <span style="color:var(--muted);font-size:0.8rem;">Inicio: ${hora}</span></p>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('bet-card').innerHTML = `
+    <div class="bet-match-header">
+      <div class="mid-tag">${pid.toUpperCase()} · ${m.fecha}</div>
+      <div class="bet-teams">
+        <span>${esc(m.local)}</span>
+        <span class="bet-vs">VS</span>
+        <span>${esc(m.visitante)}</span>
+      </div>
+      <div class="bet-time">🕐 Inicio: ${hora}</div>
+    </div>
+
+    <div class="score-row">
+      <div class="score-team">
+        <label>${esc(m.local)}</label>
+        <input class="score-input" type="number" id="gol-local" min="0" max="20" value="0" />
+      </div>
+      <span class="score-dash">-</span>
+      <div class="score-team">
+        <label>${esc(m.visitante)}</label>
+        <input class="score-input" type="number" id="gol-visit" min="0" max="20" value="0" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Tu nombre</label>
+      <input type="text" id="nombre-input" placeholder="Ej: Juan García" autocomplete="off" />
+    </div>
+
+    <button class="btn-primary" id="btn-submit" onclick="submitBet('${pid}')">
+      ✅ Confirmar apuesta — $${PRIZE_PER}
+    </button>
+    <div class="feedback" id="bet-feedback"></div>`;
+}
+
+async function submitBet(pid) {
+  const nombre = document.getElementById('nombre-input').value.trim();
+  const gLocal = parseInt(document.getElementById('gol-local').value, 10);
+  const gVisit = parseInt(document.getElementById('gol-visit').value, 10);
+
+  if (!nombre) {
+    showFeedback('bet-feedback', 'err', '⚠️ Ingresa tu nombre.');
+    return;
+  }
+  if (isNaN(gLocal) || isNaN(gVisit) || gLocal < 0 || gVisit < 0) {
+    showFeedback('bet-feedback', 'err', '⚠️ Ingresa un marcador válido.');
+    return;
+  }
+  if (isLocked(pid)) {
+    showFeedback('bet-feedback', 'err', '🔒 El tiempo para apostar ya cerró.');
+    return;
+  }
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
 
   try {
-    const [rankData, resData] = await Promise.all([
-      fetchScript('ranking'),
-      fetchScript('resultados')
-    ]);
+    // Obtener pronósticos existentes del participante
+    const existing = await apiFetch('ranking');
+    const userRow  = existing.find(r => String(r.nombre||'').trim().toLowerCase() === nombre.toLowerCase());
 
-    renderRanking(rankData, resData);
-    renderResultadosMini(resData);
-  } catch (e) {
-    const err = `<p style="color:var(--red); font-size:0.85rem; padding:10px">
-      ❌ No se pudo cargar. Verifica que APPS_SCRIPT_URL esté configurada correctamente.
-    </p>`;
-    document.getElementById('ranking-content').innerHTML   = err;
-    document.getElementById('ranking-resultados').innerHTML = err;
-    console.error(e);
+    // Construir payload con todos los partidos del usuario, actualizando solo este
+    const payload = { tipo: 'pronostico', nombre };
+    MATCHES.forEach(m2 => {
+      if (m2.id === pid) {
+        payload[m2.id] = `${gLocal}-${gVisit}`;
+      } else {
+        payload[m2.id] = userRow ? (String(userRow[m2.id] || '-').trim() || '-') : '-';
+      }
+    });
+
+    const res = await apiPost(payload);
+    if (res.ok) {
+      const m = MATCHES.find(x => x.id === pid);
+      showFeedback('bet-feedback', 'ok',
+        `✅ Apuesta guardada: <strong>${esc(m.local)} ${gLocal} - ${gVisit} ${esc(m.visitante)}</strong><br>
+         Participante: <strong>${esc(nombre)}</strong>`);
+      btn.textContent = '✅ Apuesta registrada';
+    } else {
+      throw new Error(res.error || 'Error desconocido');
+    }
+  } catch(e) {
+    btn.disabled   = false;
+    btn.textContent = '✅ Confirmar apuesta — $' + PRIZE_PER;
+    showFeedback('bet-feedback', 'err', '❌ Error al guardar. Intenta de nuevo.<br><small>' + esc(e.message) + '</small>');
   }
 }
 
-/** Calcula puntos de un participante en UN partido */
-function calcMatchPts(pronostico, resultado) {
-  if (!pronostico || String(pronostico).trim() === '-' || String(pronostico).trim() === '') return null;
-  if (!resultado) return null;
-  const loc = Number(resultado.local), vis = Number(resultado.visitante);
-  if (loc === 0 && vis === 0) return null; // partido no jugado aún
-  const partes = String(pronostico).trim().split('-');
-  if (partes.length !== 2) return null;
-  const pL = parseInt(partes[0], 10), pV = parseInt(partes[1], 10);
+// ══════════════════════════════════════════════════════════════════════
+//  RANKING
+// ══════════════════════════════════════════════════════════════════════
+function calcPts(pron, res) {
+  if (!pron || String(pron).trim() === '-' || String(pron).trim() === '') return null;
+  if (!res) return null;
+  const loc = Number(res.local), vis = Number(res.visitante);
+  if (loc === 0 && vis === 0) return null;
+  const parts = String(pron).trim().split('-');
+  if (parts.length !== 2) return null;
+  const pL = parseInt(parts[0],10), pV = parseInt(parts[1],10);
   if (isNaN(pL) || isNaN(pV)) return null;
   if (pL === loc && pV === vis) return 3;
-  if (Math.sign(pL - pV) === Math.sign(loc - vis)) return 1;
+  if (Math.sign(pL-pV) === Math.sign(loc-vis)) return 1;
   return 0;
+}
+
+async function loadRanking() {
+  document.getElementById('ranking-content').innerHTML = '<div class="spinner"></div>';
+  try {
+    const [rankData, resData] = await Promise.all([apiFetch('ranking'), apiFetch('resultados')]);
+    renderRanking(rankData, resData);
+  } catch(e) {
+    document.getElementById('ranking-content').innerHTML =
+      '<p style="color:var(--muted);font-size:0.85rem;padding:8px;">No se pudo cargar el ranking.</p>';
+  }
 }
 
 function renderRanking(rankData, resData) {
   if (!rankData || rankData.length === 0) {
     document.getElementById('ranking-content').innerHTML =
-      '<p style="color:var(--text-muted); font-size:0.85rem;">Aún no hay pronósticos registrados.</p>';
+      '<p style="color:var(--muted);font-size:0.85rem;">Aún no hay pronósticos registrados.</p>';
     return;
   }
 
-  // Mapa de resultados reales: { p01: {local:2, visitante:1}, ... }
-  const resultsMap = {};
-  (resData || []).forEach(r => {
-    resultsMap[r.partido] = { local: Number(r.local)||0, visitante: Number(r.visitante)||0 };
-  });
+  const resMap = {};
+  (resData || []).forEach(r => { resMap[r.partido] = r; });
 
-  // Acumular ganancias por persona
   const earnings = {};
   rankData.forEach(r => { if (r.nombre) earnings[r.nombre] = 0; });
 
-  let matchesHtml = '';
-  let playedCount = 0;
+  let matchHtml = '';
+  let played = 0;
 
   MATCHES.forEach(m => {
-    const pid = m.id;
-    const res = resultsMap[pid];
-    const played = res && !(res.local === 0 && res.visitante === 0);
-    if (!played) return;
+    const res = resMap[m.id];
+    if (!res || (Number(res.local) === 0 && Number(res.visitante) === 0)) return;
 
-    // Participantes que apostaron a este partido
-    const entries = rankData
-      .map(row => {
-        const pts = calcMatchPts(row[pid], res);
-        return { nombre: row.nombre, pronostico: String(row[pid] || '-').trim(), pts };
-      })
-      .filter(e => e.pts !== null);
+    const entries = rankData.map(row => ({
+      nombre: row.nombre,
+      pron:   String(row[m.id] || '-').trim(),
+      pts:    calcPts(row[m.id], res)
+    })).filter(e => e.pts !== null);
 
-    if (entries.length === 0) return;
-    playedCount++;
+    if (!entries.length) return;
+    played++;
 
-    // Ordenar por pts desc
-    entries.sort((a, b) => b.pts - a.pts);
-    const pool = entries.length * PRIZE_PER_PERSON;
+    entries.sort((a,b) => b.pts - a.pts);
+    const pool = entries.length * PRIZE_PER;
 
-    // Distribuir premios con manejo de empates
-    let posActual = 1;
-    let j = 0;
-    while (j < entries.length && posActual <= 3) {
+    // Distribuir premios con empates
+    let pos = 1, j = 0;
+    while (j < entries.length && pos <= 3) {
       const thisPts = entries[j].pts;
-      const empatados = entries.filter(e => e.pts === thisPts);
-      // Sumar %% de las posiciones ocupadas por estos empatados
-      let prizeSum = 0;
-      for (let p = posActual; p < posActual + empatados.length && p <= 3; p++) {
-        prizeSum += (PRIZE_PCT[p] || 0) * pool;
-      }
-      const prizeEach = empatados.length > 0 ? prizeSum / empatados.length : 0;
-      empatados.forEach(e => { earnings[e.nombre] = (earnings[e.nombre] || 0) + prizeEach; });
-      posActual += empatados.length;
-      j += empatados.length;
+      const tied    = entries.filter(e => e.pts === thisPts);
+      let sum = 0;
+      for (let p = pos; p < pos + tied.length && p <= 3; p++) sum += (PRIZE_PCT[p]||0) * pool;
+      const each = tied.length ? sum / tied.length : 0;
+      tied.forEach(e => { earnings[e.nombre] = (earnings[e.nombre]||0) + each; });
+      pos += tied.length; j += tied.length;
     }
 
-    // Renderizar mini-tabla del partido
     const MEDALS = ['🥇','🥈','🥉'];
-    let filas = '';
-    let rankPos = 1;
-    for (let k = 0; k < entries.length; k++) {
-      const e = entries[k];
-      const badge = rankPos <= 3
-        ? `<span style="font-size:1.1rem;">${MEDALS[rankPos-1]}</span>`
-        : `<span class="pos-badge pos-n">${rankPos}</span>`;
-      filas += `<tr>
-        <td style="width:36px;">${badge}</td>
+    let rows = ''; let rp = 1;
+    entries.forEach((e,k) => {
+      const badge = rp <= 3 ? `<span style="font-size:1rem;">${MEDALS[rp-1]}</span>`
+                            : `<span style="color:var(--muted);font-size:0.8rem;">${rp}</span>`;
+      rows += `<tr><td style="width:32px;">${badge}</td>
         <td><strong>${esc(e.nombre)}</strong></td>
         <td><span class="pts-badge">${e.pts}</span></td>
-        <td style="color:var(--text-muted);font-size:0.8rem;">${esc(e.pronostico)}</td>
-      </tr>`;
-      // Avanzar posición solo si el siguiente tiene menos puntos
-      if (k + 1 < entries.length && entries[k+1].pts < e.pts) rankPos = k + 2;
-    }
+        <td style="color:var(--muted);font-size:0.78rem;">${esc(e.pron)}</td></tr>`;
+      if (k+1 < entries.length && entries[k+1].pts < e.pts) rp = k+2;
+    });
 
-    matchesHtml += `
-      <div class="match-ranking-card">
-        <div class="match-card-header">
-          <span class="res-id">${pid.toUpperCase()}</span>
-          <span>${esc(m.local)} <strong>${res.local}-${res.visitante}</strong> ${esc(m.visitante)}</span>
-          <span class="pool-badge">Pozo $${pool.toFixed(2)}</span>
-        </div>
-        <table class="ranking-table">
-          <thead><tr><th>Pos</th><th>Nombre</th><th>Pts</th><th>Pronóstico</th></tr></thead>
-          <tbody>${filas}</tbody>
-        </table>
-      </div>`;
+    matchHtml += `<div class="match-rank-card">
+      <div class="match-rank-header">
+        <span style="font-size:0.68rem;font-weight:700;color:var(--muted);">${m.id.toUpperCase()}</span>
+        <span>${esc(m.local)} <strong>${res.local}-${res.visitante}</strong> ${esc(m.visitante)}</span>
+        <span class="pool">Pozo $${pool.toFixed(2)}</span>
+      </div>
+      <table class="rtable">
+        <thead><tr><th>Pos</th><th>Nombre</th><th>Pts</th><th>Pronóstico</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
   });
 
-  // Tabla de ganancias acumuladas
-  const earningsList = Object.entries(earnings)
-    .sort(([,a],[,b]) => b - a);
+  // Earnings table
+  const list = Object.entries(earnings).sort(([,a],[,b]) => b-a);
+  const MEDALS = ['🥇','🥈','🥉'];
+  let earHtml = played === 0
+    ? '<p style="color:var(--muted);font-size:0.85rem;margin-bottom:20px;">Los premios aparecerán cuando se jueguen los partidos.</p>'
+    : `<table class="rtable" style="margin-bottom:24px;">
+        <thead><tr><th>Pos</th><th>Nombre</th><th>Ganado</th></tr></thead><tbody>` +
+      list.map(([n,t],i) => {
+        const badge = i<3 ? `<span style="font-size:1rem;">${MEDALS[i]}</span>`
+                           : `<span style="color:var(--muted);font-size:0.8rem;">${i+1}</span>`;
+        return `<tr><td style="width:32px;">${badge}</td>
+          <td><strong>${esc(n)}</strong></td>
+          <td>${t>0?`<span class="prize-badge">$${t.toFixed(2)}</span>`:'<span style="color:var(--muted);">$0.00</span>'}</td></tr>`;
+      }).join('') + '</tbody></table>';
 
-  let earningsHtml;
-  if (playedCount === 0) {
-    earningsHtml = '<p style="color:var(--text-muted);font-size:0.85rem;">Los premios se calcularán cuando se jueguen los partidos.</p>';
-  } else {
-    earningsHtml = `<table class="ranking-table">
-      <thead><tr><th>Pos</th><th>Nombre</th><th>Ganado</th></tr></thead><tbody>`;
-    earningsList.forEach(([nombre, total], i) => {
-      const pos = i + 1;
-      const badge = pos <= 3
-        ? `<span style="font-size:1.1rem;">${['🥇','🥈','🥉'][pos-1]}</span>`
-        : `<span class="pos-badge pos-n">${pos}</span>`;
-      earningsHtml += `<tr>
-        <td style="width:36px;">${badge}</td>
-        <td><strong>${esc(nombre)}</strong></td>
-        <td>${total > 0 ? `<span class="prize-badge">$${total.toFixed(2)}</span>` : '<span style="color:var(--text-muted);">$0.00</span>'}</td>
-      </tr>`;
-    });
-    earningsHtml += '</tbody></table>';
-  }
-
-  const totalPool = MATCHES.length * rankData.length * PRIZE_PER_PERSON;
   document.getElementById('ranking-content').innerHTML =
-    `<div class="earnings-section">
-      <p class="section-sub">💰 Ganancias acumuladas <span style="font-size:0.75rem;color:var(--text-muted);">(${playedCount}/${MATCHES.length} partidos jugados · Pozo total $${totalPool})</span></p>
-      ${earningsHtml}
-    </div>
-    ${playedCount > 0 ? `<p class="section-sub">⚽ Detalle por partido</p>${matchesHtml}` : ''}`;
+    `<p style="font-size:0.75rem;color:var(--muted);margin-bottom:14px;">
+      ${played}/${MATCHES.length} partidos jugados · $${PRIZE_PER}/persona/partido
+    </p>` +
+    earHtml +
+    (played > 0 ? `<p style="font-size:0.8rem;color:var(--muted);margin-bottom:12px;font-weight:600;">⚽ Detalle por partido</p>` + matchHtml : '');
 }
 
-function renderResultadosMini(data) {
-  if (!data || data.length === 0) {
-    document.getElementById('ranking-resultados').innerHTML =
-      '<p style="color:var(--text-muted); font-size:0.85rem;">Sin datos de resultados.</p>';
-    return;
-  }
-
-  const html = data.map(r => {
-    const loc = Number(r.local) || 0;
-    const vis = Number(r.visitante) || 0;
-    const played = !(loc === 0 && vis === 0);
-    const m = MATCHES.find(x => x.id === r.partido);
-    const desc = m ? `${m.local} vs ${m.visitante}` : (r.descripcion || r.partido);
-
-    return `<div class="result-item ${played ? 'played' : 'pending'}">
-      <span class="res-id">${(r.partido||'').toUpperCase()}</span>
-      <span class="res-teams">${esc(desc)}</span>
-      <span class="res-score">${played ? loc + '-' + vis : '–'}</span>
-    </div>`;
-  }).join('');
-
-  document.getElementById('ranking-resultados').innerHTML =
-    '<div class="results-grid">' + html + '</div>';
-}
-
-// ─── Admin ────────────────────────────────────────────────────────────
-function verificarPassword() {
+// ══════════════════════════════════════════════════════════════════════
+//  ADMIN
+// ══════════════════════════════════════════════════════════════════════
+function checkAdmin() {
   const pass = document.getElementById('admin-pass').value;
-  if (pass === ADMIN_PASSWORD) {
+  if (pass === ADMIN_PASS) {
     document.getElementById('admin-lock').style.display = 'none';
-    document.getElementById('admin-form-wrapper').style.display = 'block';
+    document.getElementById('admin-form').style.display = 'block';
     buildAdminForm();
-    cargarResultadosAdmin();
+    loadAdminResults();
   } else {
-    document.getElementById('admin-pass-error').style.display = 'block';
+    document.getElementById('admin-err').style.display = 'block';
     document.getElementById('admin-pass').value = '';
     document.getElementById('admin-pass').focus();
   }
 }
 
 function buildAdminForm() {
-  const container = document.getElementById('admin-matches-form');
-  let currentDate = '';
   let html = '';
-
+  let day  = '';
   MATCHES.forEach(m => {
-    if (m.fecha !== currentDate) {
-      currentDate = m.fecha;
-      html += `<div class="section-title">${m.fecha}</div>`;
+    if (m.fecha !== day) {
+      day = m.fecha;
+      html += `<div class="section-day">${m.fecha}</div>`;
     }
-    html += `
-      <div class="admin-match">
-        <span class="am-id">${m.id.toUpperCase()}</span>
-        <span class="am-desc">${m.local} vs ${m.visitante}</span>
-        <div class="am-score">
-          <input type="number" id="r-${m.id}-l" min="0" max="20" placeholder="0" />
-          <span class="score-dash">–</span>
-          <input type="number" id="r-${m.id}-v" min="0" max="20" placeholder="0" />
-        </div>
-      </div>`;
+    html += `<div class="admin-match-row">
+      <span style="font-size:0.85rem;">${esc(m.local)} vs ${esc(m.visitante)}</span>
+      <input class="score-mini" type="number" id="r-${m.id}-L" min="0" placeholder="0" />
+      <span class="admin-dash">-</span>
+      <input class="score-mini" type="number" id="r-${m.id}-V" min="0" placeholder="0" />
+    </div>`;
   });
-
-  container.innerHTML = html;
+  document.getElementById('admin-matches').innerHTML = html;
 }
 
-async function cargarResultadosAdmin() {
+async function loadAdminResults() {
   try {
-    const data = await fetchScript('resultados');
+    const data = await apiFetch('resultados');
     data.forEach(r => {
-      const lEl = document.getElementById('r-' + r.partido + '-l');
-      const vEl = document.getElementById('r-' + r.partido + '-v');
-      if (lEl) lEl.value = r.local  || '';
-      if (vEl) vEl.value = r.visitante || '';
+      const loc = document.getElementById('r-' + r.partido + '-L');
+      const vis = document.getElementById('r-' + r.partido + '-V');
+      const lv  = Number(r.local), vv = Number(r.visitante);
+      if (loc && (lv > 0 || vv > 0)) loc.value = lv;
+      if (vis && (lv > 0 || vv > 0)) vis.value = vv;
     });
-  } catch (e) {
-    console.warn('No se pudieron pre-cargar resultados:', e);
-  }
+  } catch(e) {}
 }
 
-async function guardarResultados() {
+async function saveResults() {
   const payload = { tipo: 'resultado' };
-
   MATCHES.forEach(m => {
-    const l = document.getElementById('r-' + m.id + '-l').value;
-    const v = document.getElementById('r-' + m.id + '-v').value;
-    if (l !== '' && v !== '') {
-      payload[m.id] = l + '-' + v;
-    }
+    const l = document.getElementById('r-'+m.id+'-L').value.trim();
+    const v = document.getElementById('r-'+m.id+'-V').value.trim();
+    if (l !== '' && v !== '') payload[m.id] = `${l}-${v}`;
   });
 
-  const btn = document.getElementById('btn-guardar-resultado');
-  btn.disabled = true;
-  btn.textContent = '⏳ Guardando...';
-
+  const fb = document.getElementById('admin-feedback');
+  fb.className = 'feedback'; fb.style.display = 'none';
   try {
-    await postScript(payload);
-    showToast('✅ ¡Resultados guardados y puntos recalculados!', 'success');
-  } catch (e) {
-    showToast('❌ Error al guardar resultados', 'error');
-    console.error(e);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '💾 Guardar resultados';
-  }
-}
-
-// ─── Reglas: lista de partidos ────────────────────────────────────────
-function buildReglaPartidos() {
-  const container = document.getElementById('reglas-partidos');
-  const html = MATCHES.map(m =>
-    `<div class="result-item pending" style="margin-bottom:6px; opacity:1;">
-      <span class="res-id">${m.id.toUpperCase()}</span>
-      <span class="res-teams">${m.local} vs ${m.visitante}</span>
-      <span style="font-size:0.7rem; color:var(--text-muted);">${m.fecha}</span>
-    </div>`
-  ).join('');
-  container.parentElement.innerHTML = html;
-}
-
-// ─── HTTP helpers ─────────────────────────────────────────────────────
-async function fetchScript(action) {
-  const url = APPS_SCRIPT_URL + '?action=' + action + '&t=' + Date.now();
-  const res  = await fetch(url);
-  if (!res.ok) throw new Error('HTTP ' + res.status);
-  const text = await res.text();
-  return JSON.parse(text);
-}
-
-async function postScript(payload) {
-  // Usamos Content-Type: text/plain para evitar preflight CORS
-  // Google Apps Script acepta esto y devuelve JSON correctamente
-  try {
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method:   'POST',
-      body:     JSON.stringify(payload),
-      headers:  { 'Content-Type': 'text/plain;charset=utf-8' },
-      redirect: 'follow'
-    });
-    // Apps Script puede devolver 200 o redirigir (302 → 200)
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const text = await res.text();
-    const json = JSON.parse(text);
-    if (!json.ok) throw new Error(json.error || 'Error en script');
-    return json;
-  } catch (err) {
-    // Fallback no-cors: el dato SE ENVÍA aunque no leamos la respuesta.
-    // Sucede en algunos entornos corporativos. El servidor procesa igual.
-    if (err instanceof TypeError) {
-      await fetch(APPS_SCRIPT_URL, {
-        method:  'POST',
-        body:    JSON.stringify(payload),
-        mode:    'no-cors',
-        headers: { 'Content-Type': 'text/plain' }
-      });
-      return { ok: true, noCors: true };
+    const res = await apiPost(payload);
+    if (res.ok) {
+      showFeedback('admin-feedback', 'ok', '✅ Resultados guardados correctamente.');
+    } else {
+      throw new Error(res.error);
     }
-    throw err;
+  } catch(e) {
+    showFeedback('admin-feedback', 'err', '❌ Error: ' + esc(e.message));
   }
 }
 
-// ─── Escape HTML ──────────────────────────────────────────────────────
-function esc(str) {
-  return String(str || '')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+// ══════════════════════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════════════════════
+function showFeedback(id, type, msg) {
+  const el = document.getElementById(id);
+  el.className   = 'feedback ' + type;
+  el.innerHTML   = msg;
+  el.style.display = 'block';
 }
-
-// ─── Init ─────────────────────────────────────────────────────────────
-buildPronosticoForm();
-buildReglaPartidos();
 </script>
-
 </body>
 </html>
